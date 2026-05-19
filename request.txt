@@ -1,0 +1,37 @@
+6 Product Requirements — Wireframe-Ready Detail 6.1 Data Ingest Screen Primary UI Elements States / Edge Cases Notes for Wireframes Import Wizard – Step 1: Upload Drag-and-drop zone (dotted border, file icon) “Browse” button File-type hint text (.csv, .xlsx) Progress bar (animated) Example template link Loading, Success, File-type-error, Size-limit-error Preview what “drag file” looks like; include tooltip “Max 50 MB”. Step 2: Field Mapping Two-column grid: • Left: Detected columns • Right: Required fields (dropdowns) Auto-match badges “Ignore” toggle Unmapped-field warning banner Provide sample row (first 3 rows) under each column header. Step 3: Validation & Preview Data table (first 20 rows) Row-level error icons Inline edit modal Red error badges (e.g., missing phone number) Bulk-fix button Include status pill: “12 rows need attention”. Step 4: Campaign Setup Sequence preview timeline (horizontal swim-lane) Start date picker Time-zone dropdown “Generate Sequence” CTA “AI building sequence…” spinner Show miniature email/SMS/voice icons on each step. Import History View Table: file name, rows, status, created by, “View log” link Filter by status, date Row color changes: green=Completed, red=Failed.
+
+6.2 Template Library Screen UI Elements States Wireframe Notes Library Home Search bar Category chips (e.g., “Friendly”, “Firm”, “Final Notice”) Template cards (thumbnail + name + stats) “Create New” button Empty-state illustration when no custom templates Card hover state shows “Preview Template Editor WYSIWYG pane (rich text) Channel selector tabs (Email SMS Voice) Token insert dropdown ({{First Name}}, {{Amount}}, etc.) AI Assist sidebar: Tone slider, Rewrite, Shorten A/B variant toggle Voice Script Builder Script textarea Placeholder tokens Sound-bite insert (pauses, variables) Playback demo button – Draw telephone handset icon next to playback. Save Modal Name field Tags chips Org-wide vs. Campaign-specific radio buttons Duplicate-name error –
+
+6.3 AI Personalisation (Inline Components) Smart Fill Tooltip: appears next to each token showing example value.
+
+Tone Slider: Casual ←→ Formal with real-time preview.
+
+Language Dropdown: Auto-detect (recommended), or manual override.
+
+6.4 Sequence Generator Screen UI Elements States Notes Timeline Editor Vertical list (Step 1, Step 2…) with drag handles Step card shows: • Channel icon • Delay (“Wait 3 days”) • Snippet preview Inline “+” to add step Dragging state (ghost outline) Each step expands accordion-style for advanced options. Channel Mix Panel Pie chart of channels AI “Recommended vs. Manual” switch – Show expected open/call answer/pay rate. Exit Criteria Modal Radio buttons: Payment received, Reply detected, Manual stop – –
+
+6.5 Channel Orchestration Settings SMTP & DNS Verification Wizard (stepper, copy-paste TXT record)
+
+SMS Sender ID Picker (drop-down of purchased numbers, “Buy New” button)
+
+Voice Caller ID & STIR/SHAKEN Compliance Toggle
+
+Test Call CTA (plays “test message” to your phone)
+
+6.6 Timing Optimizer Component UI Elements Notes Smart Send Toggle On/off switch with tooltip “Predicts optimal time per recipient” Heatmap Preview 7 × 24 matrix; darker cells for higher predicted response Confidence Meter Progress bar labeled “Model confidence: 82 %”
+
+6.7 Payments & Self-Service Portal Screen UI Elements States Notes Payment Link Settings Brand logo upload Due amount field (auto-filled) Accepted methods checkboxes (Card, ACH)… Success redirect URL Test-pay button Payment-provider error banners Show inline sample of payment page. Customer Portal (External) Invoice summary card Pay-now CTA Payment history accordion Paid state → green checkmark & receipt download Desktop & mobile breakpoints.
+
+6.8 Analytics & A/B Testing Dashboard Section UI Elements Wireframe Tips Funnel Widget Horizontal funnel: Sent → Delivered → Opened → Actioned → Paid Sequence Leaderboard Table with columns: Template, Conversion %, Avg Days to Pay A/B Split View Bar chart (Variant A vs B); significance badge Filter Bar Date range, Campaign, Channel, Amount bucket
+
+6.9 Compliance Center Opt-out list table + CSV export
+
+Consent status badges on each contact row
+
+“Send test” compliance checker (returns pass/fail with reasons)
+
+6.10 Security Settings Organization-wide MFA toggle
+
+API keys list (last used, regenerate)
+
+Audit log table (user, action, timestamp, IP)
