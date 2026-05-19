@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收款通讯平台 - Untitled UI 风格</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --primary: #22c55e; --primary-light: rgba(34,197,94,0.12); --success: #22c55e;
+    --warning: #f59e0b; --danger: #ef4444;
+    /* Untitled UI gray scale */
+    --gray-25: #FCFCFD; --gray-50: #F9FAFB; --gray-100: #F2F4F7;
+    --gray-200: #E4E7EC; --gray-300: #D0D5DD; --gray-400: #98A2B3;
+    --gray-500: #667085; --gray-600: #475467; --gray-700: #344054;
+    --gray-800: #182230; --gray-900: #101828; --gray-950: #0C111D;
+    /* Semantic surface tokens */
+    --surface-primary: var(--gray-900); --surface-secondary: var(--gray-800);
+    --radius: 10px; --radius-sm: 6px; --shadow-xs: 0 1px 2px rgba(16,24,40,0.05);
+    --shadow-sm: 0 1px 3px rgba(16,24,40,0.08), 0 1px 2px rgba(16,24,40,0.06);
+    --shadow-md: 0 4px 8px rgba(16,24,40,0.08), 0 2px 4px rgba(16,24,40,0.06);
+    --shadow-lg: 0 12px 16px rgba(16,24,40,0.08), 0 4px 6px rgba(16,24,40,0.06);
+  }
+
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0C111D; color: var(--gray-100); display: flex; height: 100vh; overflow: hidden; letter-spacing: -0.01em; }
+
+  /* Sidebar */
+  .sidebar {
+    width: 240px; background: var(--surface-primary); border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; flex-shrink: 0;
+  }
+  .sidebar .logo { padding: 20px; font-size: 18px; font-weight: 700; color: var(--primary); border-bottom: 1px solid rgba(255,255,255,0.06); letter-spacing: -0.02em; }
+  .sidebar nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+  .sidebar nav .nav-group { padding: 0 12px; margin-bottom: 4px; }
+  .sidebar nav .nav-group-label { font-size: 11px; text-transform: uppercase; color: var(--gray-500); padding: 12px 8px 6px; letter-spacing: 0.5px; font-weight: 600; }
+  .sidebar nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    border-radius: var(--radius-sm); cursor: pointer; font-size: 14px; color: var(--gray-400);
+    text-decoration: none; transition: all 0.15s; margin-bottom: 1px; font-weight: 500;
+  }
+  .sidebar nav a:hover { background: rgba(255,255,255,0.04); color: var(--gray-100); }
+  .sidebar nav a.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+  .sidebar nav a .nav-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+  /* Main */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .header { background: var(--surface-primary); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .header h2 { font-size: 18px; font-weight: 600; color: var(--gray-25); letter-spacing: -0.02em; }
+  .header .user { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--gray-400); font-weight: 500; }
+  .header .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+  .content { flex: 1; overflow-y: auto; padding: 28px 32px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Common */
+  .card { background: var(--surface-primary); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 24px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.04); }
+  .card-header { font-size: 15px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; color: var(--gray-25); letter-spacing: -0.01em; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; font-family: inherit; letter-spacing: -0.01em; }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: var(--shadow-xs); }
+  .btn-primary:hover { opacity: 0.9; box-shadow: var(--shadow-sm); }
+  .btn-secondary { background: var(--surface-primary); border-color: var(--gray-600); color: var(--gray-25); }
+  .btn-secondary:hover { background: var(--gray-800); border-color: var(--gray-500); }
+  .btn-danger { background: var(--surface-primary); border-color: rgba(239,68,68,0.3); color: var(--danger); }
+  .btn-danger:hover { background: rgba(239,68,68,0.1); border-color: var(--danger); }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .btn-xs { padding: 3px 8px; font-size: 11px; }
+
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 16px; font-size: 12px; font-weight: 500; }
+  .badge-success { background: rgba(34,197,94,0.12); color: #4ade80; }
+  .badge-warning { background: rgba(245,158,11,0.12); color: #fbbf24; }
+  .badge-danger { background: rgba(239,68,68,0.12); color: #f87171; }
+  .badge-info { background: rgba(59,130,246,0.12); color: #60a5fa; }
+  .badge-gray { background: rgba(255,255,255,0.06); color: var(--gray-400); }
+
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: all 0.15s; background: var(--surface-primary); color: var(--gray-400); }
+  .tag:hover { border-color: var(--primary); color: var(--primary); }
+  .tag.active { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+  input, select, textarea { border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; outline: none; width: 100%; font-family: inherit; transition: all 0.15s; background: var(--surface-secondary); color: var(--gray-25); }
+  input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(34,197,94,0.1); }
+  input::placeholder, textarea::placeholder { color: var(--gray-500); }
+  textarea { resize: vertical; }
+
+  table { width: 100%; border-collapse: collapse; }
+  table th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 500; color: var(--gray-400); border-bottom: 1px solid rgba(255,255,255,0.06); letter-spacing: 0.02em; }
+  table td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--gray-100); }
+  table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .stepper { display: flex; gap: 0; margin-bottom: 24px; }
+  .stepper .step { flex: 1; text-align: center; position: relative; padding: 14px 8px; background: transparent; font-size: 13px; font-weight: 500; color: var(--gray-400); cursor: pointer; border-bottom: 2px solid rgba(255,255,255,0.06); transition: all 0.2s; }
+  .stepper .step.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+  .stepper .step.done { color: var(--success); border-bottom-color: var(--success); }
+
+  .progress-bar { height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden; }
+  .progress-bar .fill { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.3s; }
+
+  .upload-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius); padding: 48px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
+  .upload-zone .file-icon { font-size: 40px; margin-bottom: 12px; }
+
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .modal-overlay.show { display: flex; }
+  .modal { background: var(--surface-primary); border-radius: var(--radius); padding: 28px; width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.06); }
+  .modal h3 { font-size: 17px; font-weight: 600; margin-bottom: 20px; color: var(--gray-25); letter-spacing: -0.01em; }
+  .modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+  .heatmap-cell { width: 100%; aspect-ratio: 1; border-radius: 2px; }
+  .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .funnel-row .bar { height: 36px; border-radius: 6px; display: flex; align-items: center; padding: 0 14px; font-size: 13px; color: #fff; font-weight: 600; min-width: fit-content; }
+
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.06); }
+  .timeline .item { position: relative; margin-bottom: 16px; padding: 14px 18px; background: var(--surface-primary); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); cursor: grab; transition: all 0.15s; }
+  .timeline .item:hover { border-color: rgba(255,255,255,0.1); box-shadow: var(--shadow-sm); }
+  .timeline .item::before { content: ''; position: absolute; left: -22px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid #0C111D; }
+
+  .tone-slider { width: 100%; accent-color: var(--primary); }
+
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .stat-card { background: var(--surface-primary); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(255,255,255,0.04); }
+  .stat-card .label { font-size: 12px; color: var(--gray-400); margin-bottom: 6px; font-weight: 500; }
+  .stat-card .value { font-size: 28px; font-weight: 700; color: var(--gray-25); letter-spacing: -0.02em; }
+
+  .empty-state { text-align: center; padding: 56px 20px; color: var(--gray-500); }
+  .empty-state .illustration { font-size: 48px; margin-bottom: 12px; }
+
+  .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 768px) {
+    .sidebar { width: 60px; }
+    .sidebar .logo { font-size: 0; padding: 12px; text-align: center; }
+    .sidebar nav a { justify-content: center; font-size: 0; }
+    .sidebar nav a .nav-icon { margin: 0; width: 22px; height: 22px; }
+    .sidebar nav .nav-group-label { display: none; }
+    .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+  }
+
+  /* Light theme overrides */
+  [data-theme="light"] {
+    --primary: #4f46e5; --primary-light: #eef2ff; --success: #10b981;
+    --gray-25: #FCFCFD; --gray-50: #F9FAFB; --gray-100: #F2F4F7;
+    --gray-200: #E4E7EC; --gray-300: #D0D5DD; --gray-400: #98A2B3;
+    --gray-500: #667085; --gray-600: #475467; --gray-700: #344054;
+    --gray-800: #182230; --gray-900: #101828; --gray-950: #0C111D;
+    --surface-primary: #fff; --surface-secondary: var(--gray-50);
+    --shadow-xs: 0 1px 2px rgba(16,24,40,0.05);
+    --shadow-sm: 0 1px 3px rgba(16,24,40,0.06), 0 1px 2px rgba(16,24,40,0.04);
+    --shadow-md: 0 4px 8px rgba(16,24,40,0.06), 0 2px 4px rgba(16,24,40,0.04);
+    --shadow-lg: 0 12px 16px rgba(16,24,40,0.06), 0 4px 6px rgba(16,24,40,0.04);
+  }
+  [data-theme="light"] body { background: var(--gray-50); color: var(--gray-900); }
+  [data-theme="light"] .sidebar { background: #fff; border-right-color: var(--gray-200); }
+  [data-theme="light"] .sidebar .logo { border-bottom-color: var(--gray-100); color: var(--primary); }
+  [data-theme="light"] .sidebar nav a { color: var(--gray-600); }
+  [data-theme="light"] .sidebar nav a:hover { background: var(--gray-50); color: var(--gray-900); }
+  [data-theme="light"] .sidebar nav a.active { background: var(--primary-light); color: var(--primary); }
+  [data-theme="light"] .header { background: #fff; border-bottom-color: var(--gray-200); }
+  [data-theme="light"] .header h2 { color: var(--gray-900); }
+  [data-theme="light"] .header .user { color: var(--gray-500); }
+  [data-theme="light"] .card,
+  [data-theme="light"] .stat-card,
+  [data-theme="light"] .modal,
+  [data-theme="light"] .timeline .item { background: #fff; border-color: var(--gray-200); color: var(--gray-900); }
+  [data-theme="light"] .card-header { color: var(--gray-900); }
+  [data-theme="light"] .stat-card .value { color: var(--gray-900); }
+  [data-theme="light"] .btn-secondary { background: #fff; border-color: var(--gray-300); color: var(--gray-700); }
+  [data-theme="light"] .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
+  [data-theme="light"] .btn-danger { background: #fff; border-color: rgba(239,68,68,0.2); }
+  [data-theme="light"] .btn-danger:hover { background: #fef2f2; }
+  [data-theme="light"] .tag { background: #fff; border-color: var(--gray-200); color: var(--gray-600); }
+  [data-theme="light"] input,
+  [data-theme="light"] select,
+  [data-theme="light"] textarea { background: #fff; color: var(--gray-900); border-color: var(--gray-300); }
+  [data-theme="light"] table th { color: var(--gray-500); border-bottom-color: var(--gray-200); }
+  [data-theme="light"] table td { color: var(--gray-700); border-bottom-color: var(--gray-100); }
+  [data-theme="light"] table tr:hover td { background: var(--gray-50); }
+  [data-theme="light"] .badge-gray { background: var(--gray-100); color: var(--gray-600); }
+  [data-theme="light"] .timeline .item::before { border-color: #fff; }
+  [data-theme="light"] .timeline::before { background: var(--gray-200); }
+  [data-theme="light"] .stepper .step { color: var(--gray-500); border-bottom-color: var(--gray-200); }
+  [data-theme="light"] .stepper .step.active { color: var(--primary); border-bottom-color: var(--primary); }
+  [data-theme="light"] .theme-toggle { border-color: var(--gray-300); color: var(--gray-600); }
+  [data-theme="light"] .spinner { border-color: var(--gray-200); border-top-color: var(--primary); }
+  [data-theme="light"] .token-bg { background: #e0e7ff !important; }
+  [data-theme="light"] .error-row { background: #fef2f2 !important; }
+  [data-theme="light"] .tpl-card-green { background: linear-gradient(135deg,#e0e7ff,#c7d2fe) !important; }
+
+  /* Toggle button */
+  .theme-toggle {
+    display: flex; align-items: center; gap: 6px; background: none; border: 1px solid rgba(255,255,255,0.08);
+    color: var(--gray-400); padding: 7px 14px; border-radius: 20px; cursor: pointer;
+    font-size: 13px; font-weight: 500; transition: all 0.15s; font-family: inherit;
+  }
+  .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+  [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: inline; }
+  .theme-toggle .icon-sun { display: inline; }
+  .theme-toggle .icon-moon { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">&#9679; CollectFlow</div>
+  <nav>
+    <div class="nav-group">
+      <div class="nav-group-label">数据管理</div>
+      <a class="active" data-section="ingest"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 数据导入</a>
+      <a data-section="templates"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> 模板库</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">通讯引擎</div>
+      <a data-section="personalisation"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> AI 个性化</a>
+      <a data-section="sequence"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> 序列生成器</a>
+      <a data-section="channel"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg> 渠道编排</a>
+      <a data-section="timing"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 时机优化</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">运营</div>
+      <a data-section="payments"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> 支付管理</a>
+      <a data-section="analytics"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 分析与A/B</a>
+      <a data-section="compliance"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg> 合规中心</a>
+      <a data-section="security"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></svg> 安全设置</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main -->
+<div class="main">
+  <header class="header">
+    <h2 id="pageTitle">数据导入</h2>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="user"><span class="avatar">李</span> 李明 / 管理员</div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="切换白天/夜间模式">
+      <span class="icon-sun">&#9788; 深色</span>
+      <span class="icon-moon">&#9790; 浅色</span>
+    </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ==================== 1. 数据导入 ==================== -->
+    <div class="section active" id="sec-ingest">
+
+      <!-- Import Wizard -->
+      <div class="card">
+        <div class="card-header">导入向导</div>
+        <div class="stepper">
+          <div class="step active" data-wiz="1">1. 上传文件</div>
+          <div class="step" data-wiz="2">2. 字段映射</div>
+          <div class="step" data-wiz="3">3. 验证预览</div>
+          <div class="step" data-wiz="4">4. 活动设置</div>
+        </div>
+
+        <!-- Step 1: Upload -->
+        <div id="wiz1">
+          <div class="upload-zone" onclick="simulateUpload()">
+            <div class="file-icon">&#128193;</div>
+            <div style="font-weight:600;margin-bottom:4px;">拖拽文件到此处，或 <span style="color:var(--primary)">点击浏览</span></div>
+            <div style="font-size:13px;color:var(--gray-500);">支持 .csv / .xlsx 格式，最大 50 MB</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:var(--gray-500);">
+            &#128161; 工具提示：确保文件第一行为列标题
+            <span style="margin-left:auto;">&#128206; <a href="#" style="color:var(--primary);">下载示例模板</a></span>
+          </div>
+          <!-- Upload Progress (hidden by default) -->
+          <div id="uploadProgress" style="display:none;margin-top:16px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+              <span>contacts_2025Q4.csv</span><span>76%</span>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width:76%"></div></div>
+          </div>
+        </div>
+
+        <!-- Step 2: Field Mapping -->
+        <div id="wiz2" style="display:none;">
+          <div class="grid2">
+            <div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--gray-500);">检测到的列</div>
+              <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px;font-size:13px;">
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                  Name <span class="badge badge-success" style="margin-left:auto;">已匹配</span>
+                </div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                  Phone_Number <span class="badge badge-success" style="margin-left:auto;">已匹配</span>
+                </div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                  Email_Addr <span class="badge badge-success" style="margin-left:auto;">已匹配</span>
+                </div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                  Debt_Amount <span class="badge badge-warning" style="margin-left:auto;">待映射</span>
+                </div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+                  Extra_Col <button class="btn btn-sm btn-secondary" style="margin-left:auto;">忽略</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--gray-500);">必填字段</div>
+              <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px;font-size:13px;">
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;">&#10003; 联系人姓名 &rarr; <span style="color:var(--primary);">Name</span></div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;">&#10003; 电话号码 &rarr; <span style="color:var(--primary);">Phone_Number</span></div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;">&#10003; 电子邮箱 &rarr; <span style="color:var(--primary);">Email_Addr</span></div>
+                <div style="padding:6px 8px;border-radius:4px;margin-bottom:4px;color:var(--danger);">&#9888; 欠款金额 &larr; <select style="width:auto;display:inline;font-size:12px;padding:2px 8px;"><option>选择字段...</option><option>Debt_Amount</option></select></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:13px;color:var(--gray-500);">前 3 行预览</div>
+          <table style="margin-top:8px;">
+            <thead><tr><th>Name</th><th>Phone_Number</th><th>Email_Addr</th><th>Debt_Amount</th></tr></thead>
+            <tbody>
+              <tr><td>张三</td><td>138-0000-0001</td><td>zhang@example.com</td><td>¥3,200</td></tr>
+              <tr><td>李四</td><td>138-0000-0002</td><td>li@example.com</td><td>¥8,500</td></tr>
+              <tr><td>王五</td><td>138-0000-0003</td><td>wang@example.com</td><td>¥1,200</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Step 3: Validation -->
+        <div id="wiz3" style="display:none;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <span class="badge badge-warning" style="font-size:13px;padding:6px 12px;">&#9888; 12 行需要关注</span>
+            <button class="btn btn-sm btn-primary">批量修复</button>
+            <span style="font-size:13px;color:var(--gray-500);margin-left:auto;">显示前 20 行</span>
+          </div>
+          <table>
+            <thead><tr><th></th><th>姓名</th><th>电话</th><th>邮箱</th><th>金额</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr><td>&#10003;</td><td>张三</td><td>138-0000-0001</td><td>zhang@example.com</td><td>¥3,200</td><td><span class="badge badge-success">OK</span></td></tr>
+              <tr><td>&#10003;</td><td>李四</td><td style="color:var(--danger);">--</td><td>li@example.com</td><td>¥8,500</td><td><span class="badge badge-danger">缺电话</span></td></tr>
+              <tr><td>&#10003;</td><td>王五</td><td>138-0000-0003</td><td style="color:var(--danger);">wang@</td><td>¥1,200</td><td><span class="badge badge-danger">邮箱无效</span></td></tr>
+              <tr><td>&#10003;</td><td>赵六</td><td>138-0000-0004</td><td>zhao@example.com</td><td>¥15,000</td><td><span class="badge badge-success">OK</span></td></tr>
+              <tr><td>&#10003;</td><td>孙七</td><td>138-0000-0005</td><td>sun@example.com</td><td>¥950</td><td><span class="badge badge-success">OK</span></td></tr>
+            </tbody>
+          </table>
+          <div class="modal-overlay" id="editModal">
+            <div class="modal">
+              <h3>编辑行数据</h3>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div><label style="font-size:13px;font-weight:600;">姓名</label><input value="李四"></div>
+                <div><label style="font-size:13px;font-weight:600;">电话</label><input value="138-0000-0002" style="border-color:var(--danger);"><span style="font-size:11px;color:var(--danger);">此字段为必填项</span></div>
+                <div><label style="font-size:13px;font-weight:600;">邮箱</label><input value="li@example.com"></div>
+              </div>
+              <div class="actions">
+                <button class="btn btn-secondary" onclick="document.getElementById('editModal').classList.remove('show')">取消</button>
+                <button class="btn btn-primary" onclick="document.getElementById('editModal').classList.remove('show')">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Campaign Setup -->
+        <div id="wiz4" style="display:none;">
+          <div class="grid2">
+            <div>
+              <div style="font-size:14px;font-weight:600;margin-bottom:12px;">序列预览</div>
+              <div style="display:flex;gap:12px;overflow-x:auto;padding:12px;background:var(--surface-secondary);border-radius:var(--radius);">
+                <div style="text-align:center;min-width:80px;"><div style="font-size:24px;">&#128231;</div><div style="font-size:12px;">第1天<br>友好提醒</div></div>
+                <div style="color:var(--gray-300);align-self:center;font-size:20px;">&rarr;</div>
+                <div style="text-align:center;min-width:80px;"><div style="font-size:24px;">&#128231;</div><div style="font-size:12px;">第3天<br>跟进邮件</div></div>
+                <div style="color:var(--gray-300);align-self:center;font-size:20px;">&rarr;</div>
+                <div style="text-align:center;min-width:80px;"><div style="font-size:24px;">&#128222;</div><div style="font-size:12px;">第5天<br>电话联系</div></div>
+                <div style="color:var(--gray-300);align-self:center;font-size:20px;">&rarr;</div>
+                <div style="text-align:center;min-width:80px;"><div style="font-size:24px;">&#128276;</div><div style="font-size:12px;">第7天<br>最终通知</div></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:600;margin-bottom:12px;">活动设置</div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div><label style="font-size:12px;color:var(--gray-500);">开始日期</label><input type="date" value="2026-05-20"></div>
+                <div><label style="font-size:12px;color:var(--gray-500);">时区</label><select><option>Asia/Shanghai (GMT+8)</option><option>America/New_York (GMT-5)</option><option>Europe/London (GMT+1)</option></select></div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:24px;">
+            <button class="btn btn-primary" style="font-size:15px;padding:12px 32px;" onclick="simulateGeneration()">&#9889; 生成序列</button>
+            <div id="genSpinner" style="display:none;margin-top:12px;align-items:center;justify-content:center;gap:8px;color:var(--gray-500);">
+              <span class="spinner"></span> AI 正在构建序列...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Import History -->
+      <div class="card">
+        <div class="card-header">
+          导入历史
+          <div style="display:flex;gap:8px;">
+            <select style="width:auto;font-size:12px;"><option>全部状态</option><option>已完成</option><option>失败</option></select>
+            <input style="width:200px;font-size:12px;" placeholder="搜索文件名...">
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>文件名</th><th>行数</th><th>状态</th><th>创建人</th><th>时间</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>contacts_2025Q4.csv</td><td>1,250</td><td><span class="badge badge-success">已完成</span></td><td>李明</td><td>2026-05-18 14:30</td><td><a href="#" style="color:var(--primary);font-size:12px;">查看日志</a></td></tr>
+            <tr><td>overdue_may.xlsx</td><td>320</td><td><span class="badge badge-success">已完成</span></td><td>王芳</td><td>2026-05-17 09:15</td><td><a href="#" style="color:var(--primary);font-size:12px;">查看日志</a></td></tr>
+            <tr class="error-row" style="background:rgba(239,68,68,0.15);"><td>bad_import.csv</td><td>89</td><td><span class="badge badge-danger">失败</span></td><td>李明</td><td>2026-05-16 16:45</td><td><a href="#" style="color:var(--primary);font-size:12px;">查看日志</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==================== 2. 模板库 ==================== -->
+    <div class="section" id="sec-templates">
+      <div style="display:flex;gap:16px;margin-bottom:16px;">
+        <input style="flex:1;" placeholder="搜索模板...">
+        <button class="btn btn-primary">+ 创建新模板</button>
+      </div>
+      <div class="pills" style="margin-bottom:16px;">
+        <span class="tag active">全部</span>
+        <span class="tag">友好型</span>
+        <span class="tag">坚定型</span>
+        <span class="tag">最终通知</span>
+        <span class="tag">自定义</span>
+      </div>
+      <div class="grid3">
+        <div class="card" style="cursor:pointer;transition:all 0.2s;" onmouseenter="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12)'" onmouseleave="this.style.boxShadow=''" onclick="showTemplatePreview()">
+          <div class="tpl-card-green" style="background:linear-gradient(135deg,rgba(34,197,94,0.25),rgba(34,197,94,0.08));height:100px;border-radius:6px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:32px;">&#128172;</div>
+          <div style="font-weight:600;margin-bottom:4px;">友好初次提醒</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">适用于首次联系，语气友好温和</div>
+          <div style="display:flex;gap:8px;font-size:11px;">
+            <span style="color:var(--gray-500);">&#128231; 邮件</span>
+            <span style="color:var(--gray-500);">使用 1.2k 次</span>
+            <span style="color:var(--success);margin-left:auto;">转化率 34%</span>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;">
+          <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);height:100px;border-radius:6px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:32px;">&#9888;</div>
+          <div style="font-weight:600;margin-bottom:4px;">二次跟进提醒</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">语气稍坚定，强调逾期后果</div>
+          <div style="display:flex;gap:8px;font-size:11px;">
+            <span style="color:var(--gray-500);">&#128231; 邮件 + SMS</span>
+            <span style="color:var(--gray-500);">使用 890 次</span>
+            <span style="color:var(--success);margin-left:auto;">转化率 41%</span>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;">
+          <div style="background:linear-gradient(135deg,#fee2e2,#fecaca);height:100px;border-radius:6px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:32px;">&#128276;</div>
+          <div style="font-weight:600;margin-bottom:4px;">最终法律通知</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">正式法律措辞，含截止日期</div>
+          <div style="display:flex;gap:8px;font-size:11px;">
+            <span style="color:var(--gray-500);">&#128231; 邮件</span>
+            <span style="color:var(--gray-500);">使用 430 次</span>
+            <span style="color:var(--success);margin-left:auto;">转化率 62%</span>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;padding:40px 20px;border:2px dashed var(--gray-200);cursor:pointer;">
+          <div style="font-size:40px;margin-bottom:8px;">+</div>
+          <div style="color:var(--gray-500);">创建自定义模板</div>
+        </div>
+      </div>
+
+      <!-- Template Preview Modal -->
+      <div class="modal-overlay" id="templatePreviewModal">
+        <div class="modal" style="width:680px;">
+          <h3>模板预览 - 友好初次提醒</h3>
+          <div style="display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--gray-200);padding-bottom:8px;">
+            <span class="tag active">&#128231; 邮件</span>
+            <span class="tag">&#128172; SMS</span>
+            <span class="tag">&#128222; 语音</span>
+          </div>
+          <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;color:var(--gray-500);margin-bottom:8px;">主题：关于您的账户状态 - 温和提醒</div>
+            <div style="line-height:1.8;font-size:14px;">
+              <p>尊敬的 <span class="token-bg" style="background:rgba(34,197,94,0.18);padding:1px 6px;border-radius:3px;">&#123;&#123;First Name&#125;&#125;</span>，</p><br>
+              <p>我们注意到您的账户中有一笔金额为 <span class="token-bg" style="background:rgba(34,197,94,0.18);padding:1px 6px;border-radius:3px;">&#123;&#123;Amount&#125;&#125;</span> 的未结余额。我们理解有时事情可能会被遗忘，特此温馨提醒。</p><br>
+              <p>请在方便时尽快处理此事项。如有疑问，请随时联系我们。</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;">
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:600;margin-bottom:8px;">AI 助手</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:12px;color:var(--gray-500);">语气</div>
+                <input type="range" class="tone-slider" min="0" max="100" value="40">
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--gray-500);"><span>轻松随意</span><span>正式严谨</span></div>
+                <div style="display:flex;gap:4px;">
+                  <button class="btn btn-sm btn-secondary">&#9997; 重写</button>
+                  <button class="btn btn-sm btn-secondary">缩短</button>
+                  <button class="btn btn-sm btn-secondary">&#128260; A/B 变体</button>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:600;margin-bottom:8px;">插入 Token</div>
+              <select><option>&#123;&#123;First Name&#125;&#125;</option><option>&#123;&#123;Last Name&#125;&#125;</option><option>&#123;&#123;Amount&#125;&#125;</option><option>&#123;&#123;Due Date&#125;&#125;</option><option>&#123;&#123;Company&#125;&#125;</option></select>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-secondary" onclick="document.getElementById('templatePreviewModal').classList.remove('show')">关闭</button>
+            <button class="btn btn-primary">使用此模板</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 3. AI 个性化 ==================== -->
+    <div class="section" id="sec-personalisation">
+      <div class="card">
+        <div class="card-header">Smart Fill 智能填充</div>
+        <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px;line-height:2;">
+          尊敬的 <span class="token-bg" style="background:rgba(34,197,94,0.18);padding:2px 8px;border-radius:4px;cursor:pointer;position:relative;" onmouseenter="document.getElementById('tooltip1').style.display='block'" onmouseleave="document.getElementById('tooltip1').style.display='none'">
+            &#123;&#123;First Name&#125;&#125;
+            <span id="tooltip1" style="display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;white-space:nowrap;">示例值：张三</span>
+          </span>，<br><br>
+          您的 <span class="token-bg" style="background:rgba(34,197,94,0.18);padding:2px 8px;border-radius:4px;cursor:pointer;position:relative;" onmouseenter="document.getElementById('tooltip2').style.display='block'" onmouseleave="document.getElementById('tooltip2').style.display='none'">
+            &#123;&#123;Amount&#125;&#125;
+            <span id="tooltip2" style="display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;white-space:nowrap;">示例值：¥3,200</span>
+          </span> 的账单已于 <span class="token-bg" style="background:rgba(34,197,94,0.18);padding:2px 8px;border-radius:4px;cursor:pointer;position:relative;" onmouseenter="document.getElementById('tooltip3').style.display='block'" onmouseleave="document.getElementById('tooltip3').style.display='none'">
+            &#123;&#123;Due Date&#125;&#125;
+            <span id="tooltip3" style="display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:6px 10px;border-radius:4px;font-size:12px;white-space:nowrap;">示例值：2026-04-15</span>
+          </span> 到期。
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">语气调节</div>
+          <input type="range" class="tone-slider" min="0" max="100" value="50" oninput="document.getElementById('toneVal').textContent=this.value">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;"><span>轻松随意</span><span id="toneVal">50</span><span>正式严谨</span></div>
+          <div style="margin-top:16px;padding:16px;background:var(--surface-secondary);border-radius:var(--radius);font-size:13px;line-height:1.6;">
+            <strong>实时预览：</strong><br>"您好张三，温馨提醒您有 ¥3,200 的账单已到期，烦请尽快处理，谢谢！"
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">语言设置</div>
+          <select style="margin-bottom:12px;">
+            <option>&#127468;&#127463; 简体中文（推荐 - 自动检测）</option>
+            <option>&#127482;&#127480; English</option>
+            <option>&#127477;&#127473; Español</option>
+            <option>&#127465;&#127466; Français</option>
+          </select>
+          <div style="padding:16px;background:var(--surface-secondary);border-radius:var(--radius);font-size:13px;line-height:1.6;">
+            <strong>检测结果：</strong>你的联系人列表中 94% 使用简体中文，建议使用中文模板。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 4. 序列生成器 ==================== -->
+    <div class="section" id="sec-sequence">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">时间线编辑器</div>
+          <div class="timeline">
+            <div class="item">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">&#128231;</span> <strong>第1步：友好提醒邮件</strong> <span class="badge badge-gray" style="margin-left:auto;">等待 0 天</span></div>
+              <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">模板：友好初次提醒 | 渠道：邮件</div>
+            </div>
+            <div class="item">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">&#128231;</span> <strong>第2步：跟进邮件</strong> <span class="badge badge-gray" style="margin-left:auto;">等待 3 天</span></div>
+              <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">模板：二次跟进提醒 | 渠道：邮件</div>
+            </div>
+            <div class="item">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">&#128222;</span> <strong>第3步：电话提醒</strong> <span class="badge badge-gray" style="margin-left:auto;">等待 2 天</span></div>
+              <div style="font-size:12px;color:var(--gray-500);margin-top:4px;">模板：电话脚本-标准 | 渠道：语音</div>
+            </div>
+            <div class="item" style="border-style:dashed;">
+              <div style="display:flex;align-items:center;gap:8px;color:var(--gray-500);"><span style="font-size:20px;">+</span> 添加步骤</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">渠道分布</div>
+            <div style="display:flex;align-items:center;gap:24px;">
+              <div style="width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--primary) 0% 50%, #f59e0b 50% 75%, #3b82f6 75% 100%);"></div>
+              <div>
+                <div style="font-size:13px;margin-bottom:4px;"><span style="display:inline-block;width:10px;height:10px;background:var(--primary);border-radius:50%;margin-right:6px;"></span>邮件 50%</div>
+                <div style="font-size:13px;margin-bottom:4px;"><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:50%;margin-right:6px;"></span>SMS 25%</div>
+                <div style="font-size:13px;"><span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:50%;margin-right:6px;"></span>语音 25%</div>
+              </div>
+            </div>
+            <div style="margin-top:16px;display:flex;align-items:center;gap:12px;font-size:13px;">
+              <span style="color:var(--gray-500);">AI 推荐 vs 手动</span>
+              <span style="width:40px;height:22px;background:var(--primary);border-radius:11px;display:inline-block;position:relative;cursor:pointer;">
+                <span style="position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:2px;right:2px;"></span>
+              </span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">预期效果</div>
+            <div class="stat-card" style="margin-bottom:8px;"><div class="label">预计打开率</div><div class="value">78%</div></div>
+            <div class="stat-card" style="margin-bottom:8px;"><div class="label">预计接听率</div><div class="value">42%</div></div>
+            <div class="stat-card"><div class="label">预计回款率</div><div class="value">31%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 5. 渠道编排 ==================== -->
+    <div class="section" id="sec-channel">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">SMTP & DNS 验证</div>
+          <div class="stepper" style="margin-bottom:16px;">
+            <div class="step active">1. 添加记录</div>
+            <div class="step">2. 验证</div>
+            <div class="step">3. 完成</div>
+          </div>
+          <div style="background:var(--surface-secondary);padding:16px;border-radius:var(--radius);font-size:13px;">
+            <div style="font-weight:600;margin-bottom:8px;">请将以下 TXT 记录添加到您的 DNS：</div>
+            <div style="background:#1f2937;color:#10b981;padding:12px;border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:8px;">
+              v=spf1 include:_spf.collectflow.com ~all
+            </div>
+            <button class="btn btn-sm btn-secondary" style="font-size:11px;">&#128203; 复制记录</button>
+            <button class="btn btn-sm btn-primary" style="margin-left:8px;">验证 DNS</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">SMS 发送号码</div>
+          <select style="margin-bottom:12px;">
+            <option>+86 138-8888-0001 (已购买)</option>
+            <option>+86 138-8888-0002 (已购买)</option>
+            <option disabled>-- 购买新号码 --</option>
+          </select>
+          <button class="btn btn-sm btn-secondary">+ 购买新号码</button>
+          <div style="margin-top:16px;font-size:13px;color:var(--gray-500);">剩余可用余额：2,350 条</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">语音呼叫设置</div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px;">来电显示号码</div>
+            <select><option>+86 400-888-9999</option></select>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px;">STIR/SHAKEN 合规</div>
+            <span class="badge badge-success">已启用</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary">&#128222; 发送测试呼叫到您的手机</button>
+      </div>
+    </div>
+
+    <!-- ==================== 6. 时机优化 ==================== -->
+    <div class="section" id="sec-timing">
+      <div class="card">
+        <div class="card-header">
+          Smart Send 智能发送
+          <span style="width:44px;height:24px;background:var(--success);border-radius:12px;display:inline-block;position:relative;cursor:pointer;">
+            <span style="position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;right:2px;"></span>
+          </span>
+        </div>
+        <div style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">&#128161; 为每个收件人预测最佳发送时间，提升打开率和回复率</div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">最佳时间热力图</div>
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">7天 × 24小时 响应概率矩阵</div>
+          <div style="display:grid;grid-template-columns:50px repeat(24,1fr);gap:1px;">
+            <div></div><div style="font-size:9px;text-align:center;color:#999;">0</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">3</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">6</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">9</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">12</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">15</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">18</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;">21</div><div style="font-size:9px;text-align:center;color:#999;"></div><div style="font-size:9px;text-align:center;color:#999;"></div>
+          </div>
+          <!-- Week heatmap rows, generated inline -->
+          <div style="display:grid;grid-template-columns:50px repeat(24,1fr);gap:1px;" id="heatmapGrid"></div>
+          <div style="display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:9px;color:#999;margin-top:8px;">
+            <span>低</span>
+            <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:rgba(79,70,229,0.1);"></span>
+            <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:rgba(79,70,229,0.3);"></span>
+            <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:rgba(79,70,229,0.5);"></span>
+            <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:rgba(79,70,229,0.7);"></span>
+            <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:rgba(79,70,229,0.9);"></span>
+            <span>高</span>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">模型置信度</div>
+            <div style="font-size:32px;font-weight:700;color:var(--primary);margin-bottom:4px;">82%</div>
+            <div class="progress-bar" style="height:10px;"><div class="fill" style="width:82%;"></div></div>
+            <div style="font-size:12px;color:var(--gray-500);margin-top:8px;">基于 15,230 条历史发送数据分析</div>
+          </div>
+          <div class="card">
+            <div class="card-header">最佳发送窗口</div>
+            <div style="font-size:14px;font-weight:600;">周二 10:00-11:00</div>
+            <div style="font-size:13px;color:var(--success);">预期打开率 +22% vs 平均值</div>
+            <div style="font-size:14px;font-weight:600;margin-top:12px;">周四 14:00-15:00</div>
+            <div style="font-size:13px;color:var(--success);">预期回复率 +18% vs 平均值</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 7. 支付管理 ==================== -->
+    <div class="section" id="sec-payments">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">支付链接设置</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div><label style="font-size:12px;color:var(--gray-500);">品牌 Logo</label>
+              <div style="border:2px dashed var(--gray-200);border-radius:var(--radius);padding:20px;text-align:center;margin-top:4px;">
+                &#128247; 上传 Logo（建议 200×60px）
+              </div>
+            </div>
+            <div><label style="font-size:12px;color:var(--gray-500);">欠款金额字段</label><input value="{{Amount}}" readonly></div>
+            <div><label style="font-size:12px;color:var(--gray-500);">支付方式</label>
+              <div style="display:flex;gap:16px;margin-top:4px;">
+                <label><input type="checkbox" checked> 银行卡</label>
+                <label><input type="checkbox" checked> ACH 转账</label>
+              </div>
+            </div>
+            <div><label style="font-size:12px;color:var(--gray-500);">支付成功跳转 URL</label><input value="https://example.com/thank-you"></div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;">
+            <button class="btn btn-sm btn-secondary">测试支付</button>
+            <button class="btn btn-sm btn-primary">保存设置</button>
+          </div>
+          <div style="margin-top:16px;padding:12px;background:#fef2f2;border-radius:6px;font-size:12px;color:var(--danger);display:none;" id="payError">
+            &#9888; 支付网关错误：请联系 Stripe 支持。
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">外部客户支付门户</div>
+          <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:20px;">
+            <div style="text-align:center;margin-bottom:16px;">
+              <div style="font-size:24px;font-weight:700;">&#9679; CollectFlow</div>
+              <div style="font-size:13px;color:var(--gray-500);">安全支付通道</div>
+            </div>
+            <div class="stat-card" style="text-align:center;margin-bottom:16px;">
+              <div class="label">应付金额</div>
+              <div class="value" style="color:var(--primary);">¥3,200.00</div>
+            </div>
+            <div style="border-bottom:1px solid var(--gray-200);margin-bottom:8px;"></div>
+            <div style="font-size:12px;color:var(--gray-500);margin-bottom:12px;">&#10003; 发票号：INV-2026-001234</div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">立即支付</button>
+            <div style="margin-top:16px;font-size:12px;">
+              <div style="font-weight:600;margin-bottom:8px;">支付历史</div>
+              <div style="padding:8px;border:1px solid var(--gray-200);border-radius:4px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;">
+                <span>2026-05-10 ¥500</span><span class="badge badge-success">已支付 &#10003;</span>
+              </div>
+              <div style="padding:8px;border:1px solid var(--gray-200);border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+                <span>2026-05-15 ¥500</span><span class="badge badge-success">已支付 &#10003;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 8. 分析仪表板 ==================== -->
+    <div class="section" id="sec-analytics">
+      <div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;">
+        <input type="date" style="width:auto;" value="2026-05-01">
+        <span style="align-self:center;color:var(--gray-500);">至</span>
+        <input type="date" style="width:auto;" value="2026-05-19">
+        <select style="width:auto;"><option>全部活动</option><option>2025Q4催收</option></select>
+        <select style="width:auto;"><option>全部渠道</option><option>邮件</option><option>SMS</option><option>语音</option></select>
+        <select style="width:auto;"><option>全部金额</option><option>&lt;¥1,000</option><option>¥1,000-5,000</option><option>&gt;¥5,000</option></select>
+      </div>
+      <div class="grid4" style="margin-bottom:16px;">
+        <div class="stat-card"><div class="label">总发送量</div><div class="value">12,450</div></div>
+        <div class="stat-card"><div class="label">打开率</div><div class="value">68%</div></div>
+        <div class="stat-card"><div class="label">行动率</div><div class="value">41%</div></div>
+        <div class="stat-card"><div class="label">回款率</div><div class="value" style="color:var(--success);">29%</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">转化漏斗</div>
+          <div class="funnel-row"><div class="bar" style="width:100%;background:var(--primary);">已发送 12,450</div></div>
+          <div class="funnel-row"><div class="bar" style="width:85%;background:var(--primary);opacity:0.85;">已送达 10,580</div></div>
+          <div class="funnel-row"><div class="bar" style="width:68%;background:var(--primary);opacity:0.7;">已打开 8,466</div></div>
+          <div class="funnel-row"><div class="bar" style="width:41%;background:var(--primary);opacity:0.55;">已行动 5,104</div></div>
+          <div class="funnel-row"><div class="bar" style="width:29%;background:#10b981;">已回款 3,610</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header">A/B 对比</div>
+          <div style="display:flex;align-items:flex-end;gap:32px;height:160px;padding:0 40px;">
+            <div style="text-align:center;flex:1;">
+              <div style="height:120px;background:var(--primary);border-radius:4px 4px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;color:#fff;font-weight:600;">34%</div>
+              <div style="font-size:12px;margin-top:8px;">A组：友好语气<br><span class="badge badge-info">基准</span></div>
+            </div>
+            <div style="text-align:center;flex:1;">
+              <div style="height:156px;background:#10b981;border-radius:4px 4px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;color:#fff;font-weight:600;">41%</div>
+              <div style="font-size:12px;margin-top:8px;">B组：紧迫语气<br><span class="badge badge-success">显著胜出</span></div>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:8px;font-size:13px;color:var(--success);">B组转化率 +20.6% (p&lt;0.01)</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-header">序列排行榜</div>
+        <table>
+          <thead><tr><th>模板名称</th><th>发送量</th><th>转化率</th><th>平均回款天数</th><th>回款总额</th></tr></thead>
+          <tbody>
+            <tr><td>最终法律通知</td><td>430</td><td><span class="badge badge-success">62%</span></td><td>3.2 天</td><td>¥1,240,000</td></tr>
+            <tr><td>二次跟进提醒</td><td>890</td><td><span class="badge badge-success">41%</span></td><td>5.8 天</td><td>¥2,150,000</td></tr>
+            <tr><td>友好初次提醒</td><td>1,200</td><td><span class="badge badge-warning">34%</span></td><td>7.1 天</td><td>¥3,080,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==================== 9. 合规中心 ==================== -->
+    <div class="section" id="sec-compliance">
+      <div class="card">
+        <div class="card-header">
+          退订列表
+          <button class="btn btn-sm btn-secondary">导出 CSV</button>
+        </div>
+        <table>
+          <thead><tr><th>联系方式</th><th>姓名</th><th>退订时间</th><th>来源</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>138-0000-0101</td><td>王某某</td><td>2026-05-15</td><td>SMS 回复 "STOP"</td><td><span class="badge badge-danger">已退订</span></td></tr>
+            <tr><td>user@example.com</td><td>张某某</td><td>2026-05-10</td><td>邮件退订链接</td><td><span class="badge badge-danger">已退订</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">合规检查器</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--surface-secondary);border-radius:6px;">
+              <span style="font-size:13px;">&#128231; 测试邮件模板</span>
+              <button class="btn btn-sm btn-primary">发送测试</button>
+            </div>
+            <div style="border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px;">
+              <div style="font-weight:600;margin-bottom:8px;color:var(--success);">&#10003; 通过 (3/3 检查项)</div>
+              <div style="font-size:12px;color:var(--gray-500);">&#10003; 包含退订链接</div>
+              <div style="font-size:12px;color:var(--gray-500);">&#10003; 发送方身份明确</div>
+              <div style="font-size:12px;color:var(--gray-500);">&#10003; 内容不含误导信息</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">合规状态标签</div>
+          <table>
+            <thead><tr><th>联系人</th><th>同意状态</th></tr></thead>
+            <tbody>
+              <tr><td>张三</td><td><span class="badge badge-success">明确同意</span></td></tr>
+              <tr><td>李四</td><td><span class="badge badge-warning">隐含同意</span></td></tr>
+              <tr><td>王五</td><td><span class="badge badge-danger">已撤回</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 10. 安全设置 ==================== -->
+    <div class="section" id="sec-security">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header">组织安全</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--gray-100);">
+            <div><div style="font-weight:600;font-size:14px;">强制多因素认证 (MFA)</div><div style="font-size:12px;color:var(--gray-500);">所有成员必须使用 MFA</div></div>
+            <span style="width:44px;height:24px;background:var(--success);border-radius:12px;display:inline-block;position:relative;">
+              <span style="position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;right:2px;"></span>
+            </span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">API 密钥</div>
+          <table>
+            <thead><tr><th>名称</th><th>密钥</th><th>最近使用</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td>生产密钥</td><td>sk_live_●●●●●●●●●●●●34ab</td><td>2 小时前</td>
+                <td><button class="btn btn-xs btn-danger">重新生成</button></td>
+              </tr>
+              <tr>
+                <td>测试密钥</td><td>sk_test_●●●●●●●●●●●●12cd</td><td>3 天前</td>
+                <td><button class="btn btn-xs btn-danger">重新生成</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">审计日志</div>
+        <table>
+          <thead><tr><th>用户</th><th>操作</th><th>时间</th><th>IP 地址</th></tr></thead>
+          <tbody>
+            <tr><td>李明</td><td>登录系统</td><td>2026-05-19 11:30:22</td><td>192.168.1.100</td></tr>
+            <tr><td>王芳</td><td>创建模板 "友好提醒V2"</td><td>2026-05-19 10:15:08</td><td>192.168.1.101</td></tr>
+            <tr><td>李明</td><td>导入联系人</td><td>2026-05-18 14:30:00</td><td>192.168.1.100</td></tr>
+            <tr><td>王芳</td><td>修改序列设置</td><td>2026-05-18 09:45:33</td><td>192.168.1.101</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// Theme toggle
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+})();
+function toggleTheme() {
+  const el = document.documentElement;
+  const current = el.getAttribute('data-theme');
+  const next = current === 'light' ? null : 'light';
+  if (next) el.setAttribute('data-theme', next);
+  else el.removeAttribute('data-theme');
+  localStorage.setItem('theme', next || 'dark');
+}
+
+// Generate heatmap
+(function() {
+  const days = ['周一','周二','周三','周四','周五','周六','周日'];
+  const grid = document.getElementById('heatmapGrid');
+  if (!grid) return;
+  // Peak patterns: weekday mid-morning (9-11am) and early afternoon (2-4pm)
+  const peakHours = { workday_am: [9,10], workday_pm: [14,15], evening: [19,20] };
+  let html = '';
+  days.forEach((day, di) => {
+    html += '<div style="font-size:10px;align-self:center;padding-right:4px;text-align:right;">'+day+'</div>';
+    const isWeekend = di >= 5;
+    for (let h = 0; h < 24; h++) {
+      let alpha;
+      if (isWeekend) {
+        alpha = 0.05 + Math.random() * 0.08;
+      } else if (h >= 9 && h <= 11) {
+        alpha = 0.5 + Math.random() * 0.4;
+      } else if (h >= 14 && h <= 16) {
+        alpha = 0.4 + Math.random() * 0.45;
+      } else if (h >= 8 && h <= 18) {
+        alpha = 0.15 + Math.random() * 0.25;
+      } else {
+        alpha = 0.02 + Math.random() * 0.06;
+      }
+      html += '<div class="heatmap-cell" style="background:rgba(79,70,229,'+alpha.toFixed(2)+');"></div>';
+    }
+  });
+  grid.innerHTML = html;
+})();
+
+// Navigation
+document.querySelectorAll('.sidebar nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.sidebar nav a').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    const secId = 'sec-' + link.dataset.section;
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(secId);
+    if (target) target.classList.add('active');
+    document.getElementById('pageTitle').textContent = link.textContent.trim().replace(/^[^一-龥]*/, '');
+  });
+});
+
+// Import wizard steps
+document.querySelectorAll('.stepper .step').forEach(step => {
+  step.addEventListener('click', function() {
+    const stepNum = this.dataset.wiz;
+    document.querySelectorAll('#sec-ingest .stepper .step').forEach(s => {
+      s.classList.remove('active');
+      if (parseInt(s.dataset.wiz) < parseInt(stepNum)) s.classList.add('done');
+    });
+    this.classList.add('active');
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById('wiz' + i);
+      if (el) el.style.display = i === parseInt(stepNum) ? '' : 'none';
+    }
+  });
+});
+
+// Upload simulation
+function simulateUpload() {
+  const prog = document.getElementById('uploadProgress');
+  prog.style.display = 'block';
+  const fill = prog.querySelector('.fill');
+  let p = 0;
+  const interval = setInterval(() => {
+    p += Math.random() * 30;
+    if (p >= 100) { p = 100; clearInterval(interval); }
+    fill.style.width = p + '%';
+    prog.querySelector('span:last-child').textContent = Math.round(p) + '%';
+  }, 300);
+}
+
+// Sequence generation simulation
+function simulateGeneration() {
+  const spinner = document.getElementById('genSpinner');
+  spinner.style.display = 'flex';
+  setTimeout(() => { spinner.style.display = 'none'; alert('序列已生成！共创建 4 个步骤。'); }, 2500);
+}
+
+// Template preview
+function showTemplatePreview() {
+  document.getElementById('templatePreviewModal').classList.add('show');
+}
+document.getElementById('templatePreviewModal')?.addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+
+// Tag clicks
+document.querySelectorAll('.pills .tag').forEach(tag => {
+  tag.addEventListener('click', function() {
+    document.querySelectorAll('.pills .tag').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
